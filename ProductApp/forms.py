@@ -3,7 +3,6 @@ from .models import Product, Productitem
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
 from django import forms
-import  os
 class CreateUserForm(UserCreationForm):
     class Meta:
         model= User
@@ -18,7 +17,6 @@ class ProductForm(forms.ModelForm):
     def clean_image(self):
         print("this is from clean form")
         image=self.cleaned_data['image']
-        cc,bc=os.path.splitext(image.name)
 
 
 

@@ -5,8 +5,6 @@ from .forms import *
 from .models import Product
 from django.contrib.auth import authenticate,login
 from django.contrib.auth.decorators import login_required
-from django.utils.decorators import method_decorator
-from django.http import HttpResponseRedirect
 from django.shortcuts import render,redirect
 from django.contrib import messages
 from django.utils.decorators import method_decorator
@@ -31,14 +29,11 @@ class ProductItemCreate(CreateView):
         data = super(ProductItemCreate, self).get_context_data(**kwargs)
         if self.request.POST :
             data['Productitems'] = ProductItemFormset(self.request.POST)
-            print(data['Productitems'])
         else:
             data['Productitems'] = ProductItemFormset()
-        print(data)
         return data
 
     def form_valid(self, form):
-        print("in form valid")
         context = self.get_context_data()
         Productitems = context['Productitems']
         with transaction.atomic():
@@ -89,9 +84,7 @@ def UserRegistration(request):
         form = CreateUserForm(request.POST)
         if form.is_valid():
             user=form.save()
-            #user.set_password(user.password)
             user.is_superuser = True
-            user.is_staff = True
             user.save()
             return redirect("login")
         else:
